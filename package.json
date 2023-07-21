@@ -33,6 +33,7 @@
     "openapi-spec": "node ./dist/openapi-spec",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
+    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build"
   },
@@ -55,6 +56,7 @@
     "@loopback/rest": "^13.1.1",
     "@loopback/rest-explorer": "^6.1.1",
     "@loopback/service-proxy": "^6.1.1",
+    "dotenv": "^16.3.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
@@ -65,6 +67,7 @@
     "eslint": "^8.45.0",
     "nodemon": "^3.0.1",
     "source-map-support": "^0.5.21",
+    "tsc-watch": "^6.0.4",
     "typescript": "~5.1.6"
   }
 }
