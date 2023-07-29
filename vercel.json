@@ -3,6 +3,10 @@
     {
       "src": "/",
       "dest": "index.js"
+    },
+    {
+      "src": "/ping",
+      "dest": "./controllers/ping.js"
     }
   ]
 }
