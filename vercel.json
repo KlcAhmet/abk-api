@@ -6,7 +6,7 @@
     },
     {
       "src": "/ping",
-      "dest": "/ping.controller.js"
+      "dest": "/controllers/ping.controller.js"
     }
   ]
 }
