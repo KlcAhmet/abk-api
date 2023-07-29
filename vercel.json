@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/",
       "destination": "/"
+    },
+    {
+      "source": "/ping",
+      "destination": "/ping"
     }
   ]
 }
