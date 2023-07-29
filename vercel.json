@@ -6,7 +6,7 @@
     },
     {
       "source": "/ping",
-      "destination": "/ping"
+      "destination": "/ping.controller"
     }
   ]
 }
