@@ -1,15 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "index.js"
-    },
-    {
-      "src": "/ping",
-      "dest": "/ping.controller.js",
-      "methods": [
-        "GET"
-      ]
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
