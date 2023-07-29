@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/ping",
-      "dest": "/controllers/ping.controller.ts"
+      "dest": "dist/controllers/ping.controller.js"
     }
   ]
 }
