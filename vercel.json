@@ -1,8 +1,9 @@
 {
   "routes": [
     {
-      "src": "/ping",
-      "dest": "dist/controllers/ping.controller.js"
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
     }
   ]
 }
