@@ -20,8 +20,8 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
         with:
-          source: '.'
-            target: '/var/www/abk-api/'
+          source: "."
+            target: "/var/www/abk-api/"
           script: |
             cd /var/www/abk-api/
             git pull origin main
