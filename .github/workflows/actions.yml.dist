@@ -1,0 +1,62 @@
+name: Actions for GitHub Demo
+run-name: ${{ github.actor }} starting actions
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # We are going to host it in our own server, we are going to replace ubuntu-latest with self-hosted.
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+
+      - name: setup node
+        uses: actions/setup-node@master
+        with:
+          node-version: '18.x'
+
+      # install applicaion dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+          npm ci 
+
+      # build and test the apps
+      - name: build
+        run: |
+          npm run build
+          npm run test
+          
+  push_to_Docker_Hub:
+      # The type of runner that the job will run on
+      runs-on: ubuntu-latest
+      # build docker image and push to docker hub
+      # only if the app build and test successfully
+      needs: [build]
+
+      steps:
+
+
+
+
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🔚 The job has finished"
+      - run: echo "🤖 The job was run by the ${{ github.actor }}."
