@@ -25,3 +25,5 @@ jobs:
             git pull origin main
             git status
             npm install
+            docker build . -t abkgithub/abk-api
+            docker run -p 3000:3000 -d abkgithub/abk-api
