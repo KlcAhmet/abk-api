@@ -1,4 +1,4 @@
-name: Dockerize and Run Node.js App
+name: Deploy
 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -20,6 +20,8 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
         with:
+          source: '.'
+            target: '/var/www/abk-api/'
           script: |
             cd /var/www/abk-api/
             git pull origin main
