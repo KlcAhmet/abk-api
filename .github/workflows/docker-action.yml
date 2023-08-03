@@ -14,11 +14,12 @@ jobs:
 
       - name: Copy repository contents via scp
         uses: appleboy/scp-action@master
-        with:
+        env:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+        with:
           script: |
             cd /var/www/abk-api/
             git pull origin main
