@@ -12,6 +12,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Copy repository contents via scp
         uses: appleboy/ssh-action@master
         with:
@@ -19,25 +23,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
-          # script: |
-          #   cd var/www/abk-api/
-          #   git pull origin main
-          #   git status
-          #   npm install
-          #   sudo docker ps
-
-  starting-Node:
-    needs: deploy
-    runs-on: self-hosted
-    environment: main
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: cd var/www/abk-api/
-      - run: git pull origin main
-      - run: git status
-      - run: npm install
-      - run: sudo docker ps
+          script: |
+            cd var/www/abk-api/
+            git pull origin main
+            git status
+            npm install
+            sudo docker ps
