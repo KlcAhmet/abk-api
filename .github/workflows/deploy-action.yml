@@ -27,6 +27,7 @@ jobs:
           #   sudo docker ps
 
   starting-Node:
+    needs: deploy
     runs-on: ubuntu-latest
     environment: main
 
