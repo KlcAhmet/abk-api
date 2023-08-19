@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: echo "{name}={value}" >> $(node --version)"
+      - run: echo "$(node --version)"
       - run: cd var/www/abk-api/
       - run: git pull origin main
       - run: git status
