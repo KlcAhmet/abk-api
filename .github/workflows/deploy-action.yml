@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: main
 
     steps:
@@ -20,8 +20,6 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
           script: |
-            nvm alias default 18.17.1
-            node -v
             cd var/www/abk-api/
             git pull origin main
             git status
