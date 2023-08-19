@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     environment: main
 
     steps:
@@ -25,3 +25,4 @@ jobs:
             git pull origin main
             git status
             npm install
+            sudo docker ps
