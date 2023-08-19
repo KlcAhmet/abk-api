@@ -27,6 +27,9 @@ jobs:
           #   sudo docker ps
 
   starting-Node:
+    runs-on: ubuntu-latest
+    environment: main
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
