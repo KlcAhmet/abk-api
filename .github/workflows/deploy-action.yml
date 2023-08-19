@@ -28,7 +28,7 @@ jobs:
 
   starting-Node:
     needs: deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: main
 
     steps:
