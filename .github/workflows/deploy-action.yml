@@ -31,11 +31,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-        run: |
-          nvm
-          node -v
-          cd var/www/abk-api/
-          git pull origin main
-          git status
-          npm install
-          sudo docker ps
+      - run: nvm
+      - run: node -v
+      - run: cd var/www/abk-api/
+      - run: git pull origin main
+      - run: git status
+      - run: npm install
+      - run: sudo docker ps
