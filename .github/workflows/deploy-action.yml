@@ -19,8 +19,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
-          node: 18
           script: |
+            nvm alias default 18.17.1
             cd var/www/abk-api/
             git pull origin main
             git status
