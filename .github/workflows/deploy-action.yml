@@ -20,6 +20,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
+      - name: Start Node JS
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
