@@ -24,6 +24,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
           script: |
+            node -v
             cd var/www/abk-api/
             git pull origin main
             git status
