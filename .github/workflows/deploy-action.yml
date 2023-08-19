@@ -12,10 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Copy repository contents via scp
         uses: appleboy/ssh-action@master
         with:
@@ -24,6 +20,7 @@ jobs:
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
           script: |
+            nvm alias default 18.17.1
             node -v
             cd var/www/abk-api/
             git pull origin main
