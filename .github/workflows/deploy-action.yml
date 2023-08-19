@@ -22,10 +22,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          # script: |
-      - run: cd var/www/abk-api/
-      - run: git pull origin main
-      - run: git status
-      - run: npm install
-      - run: sudo docker ps
-      - run: echo "Deployed successfully!"
+        script: |
+          cd var/www/abk-api/
+          git pull origin main
+          git status
+          npm install
+          sudo docker ps
+          echo "Deployed successfully!"
