@@ -22,7 +22,7 @@ jobs:
       - run: git pull origin main
       - run: git status
       - run: npm install
-      - run: sudo docker ps
+      - run: ${{ secrets.SSHKEY }} | sudo -S docker ps
       - run: echo "Deployed successfully!"
       - run: echo ls
       - run: echo "test --------------------------------"
