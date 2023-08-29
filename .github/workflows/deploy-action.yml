@@ -19,9 +19,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: ls
-      - run: cd var/www/abk-api/s
-      - run: cd var/www/abk-api/
       - run: git pull origin main
       - run: git status
       - run: npm install
