@@ -1,5 +1,6 @@
 import {AbkApiApplication, ApplicationConfig} from './application';
 import 'dotenv/config';
+import * as fs from 'fs';
 
 export * from './application';
 
@@ -31,6 +32,11 @@ if (require.main === module) {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+
+      // Enable HTTPS
+      protocol: 'https',
+      key: fs.readFileSync('./cert/key.pem'),
+      cert: fs.readFileSync('./cert/cert.pem'),
     },
   };
   main(config).catch(err => {
