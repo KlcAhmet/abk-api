@@ -20,11 +20,9 @@ jobs:
         with:
           node-version: '18'
       - run: git pull origin main
-      - run: git status
-      - run: npm install
-      - run: npm docker:build
-      #- run: npm docker:update
-      #- run: npm docker:run
+      - run: npm run docker:build
+      #- run: npm run docker:update
+      #- run: npm run docker:run
       - run: docker ps
       - run: echo "Deployed successfully!"
       - run: echo ls
