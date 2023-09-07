@@ -26,7 +26,7 @@
     "posttest": "npm run lint",
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "docker:build": "docker build --no-cache -t abk-api:latest .",
-    "docker:run": "docker run -p 443:3000 -d --name abk-api abk-api",
+    "docker:run": "docker run -p 3000:3000 -d --name abk-api abk-api",
     "docker:update": "docker container rm -f abk-api && docker image prune -f",
     "premigrate": "npm run build",
     "migrate": "node ./dist/migrate",
