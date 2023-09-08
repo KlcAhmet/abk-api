@@ -1,6 +1,5 @@
 import {AbkApiApplication, ApplicationConfig} from './application';
 import 'dotenv/config';
-import * as fs from 'fs';
 
 export * from './application';
 
@@ -34,10 +33,10 @@ if (require.main === module) {
         setServersFromRequest: true,
       },
 
-      // Enable HTTPS
+      /*// Enable HTTPS
       protocol: 'https',
       key: fs.readFileSync('./cert/key.pem'),
-      cert: fs.readFileSync('./cert/cert.pem'),
+      cert: fs.readFileSync('./cert/cert.pem'),*/
     },
   };
   main(config).catch(err => {
