@@ -33,7 +33,10 @@
     "start": "node -r source-map-support/register .",
     "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "docker:build-prod": "docker build --no-cache -t abk-api:latest .",
+    "docker:run-prod": "docker run -p 443:3000 -d --name abk-api abk-api",
+    "docker:update-prod": "docker container rm -f abk-api && docker image prune -f"
   },
   "repository": {
     "type": "git",
