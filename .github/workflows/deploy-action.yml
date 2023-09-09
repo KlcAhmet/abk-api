@@ -22,8 +22,8 @@ jobs:
         env:
           PORT: ${{ secrets.PORT }}
       - run: git pull origin main
-      - run: npm run docker:build
-      - run: npm run docker:update
-      - run: npm run docker:run
+      - run: npm run docker build --no-cache -t abk-api:latest .
+      - run: npm run docker run -p 443:3000 -d --name abk-api abk-api
+      - run: npm run docker container rm -f abk-api && docker image prune -f
       - run: docker ps
       - run: echo "Deployed successfully!"
