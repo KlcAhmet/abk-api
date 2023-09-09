@@ -27,4 +27,4 @@ jobs:
       - run: npm run docker:run
       - run: docker ps
       - run: echo "Deployed successfully!"
-      - run: echo "port is $PORT"
+      - run: echo "port is ${{ secrets.PORT }}"
