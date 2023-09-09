@@ -38,7 +38,7 @@
     "docker:run-prod": "docker run -p 443:3000 -d --name abk-api abk-api",
     "docker:update-prod": "docker container rm -f abk-api && docker image prune -f",
     "docker:build-dev": "docker build --no-cache -t abk-api-dev:latest .",
-    "docker:run-dev": "docker run -p 300:3000 -d --name abk-api-dev abk-api-dev",
+    "docker:run-dev": "docker run -p 3000:3000 -d --name abk-api-dev abk-api-dev",
     "docker:update-dev": "docker container rm -f abk-api-dev && docker image prune -f"
   },
   "repository": {
