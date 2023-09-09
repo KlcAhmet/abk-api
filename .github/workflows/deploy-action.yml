@@ -25,5 +25,5 @@ jobs:
       - run: npm run docker:run
       - run: docker ps
       - run: echo "Deployed successfully!"
-      - run: echo ls
-      - run: echo pwd
+      - run: ls
+      - run: pwd
