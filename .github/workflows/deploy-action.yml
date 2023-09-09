@@ -16,6 +16,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
+        env:
+          PORT: ${{ secrets.PORT }}
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -25,5 +27,4 @@ jobs:
       - run: npm run docker:run
       - run: docker ps
       - run: echo "Deployed successfully!"
-      - run: ls
-      - run: pwd
+      - run: echo "port is $PORT"
