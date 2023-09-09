@@ -26,3 +26,4 @@ jobs:
       - run: docker ps
       - run: echo "Deployed successfully!"
       - run: echo ls
+      - run: echo pwd
