@@ -41,8 +41,11 @@ export class PingController {
     // Reply with a greeting, the current time, the url, and request headers
     return {
       greeting1: 'Hello from LoopBack test6',
-      greeting2: this.req.headers,
-      greeting3: process.env.PORT,
+      greeting2: this.req.headers['x-forwarded-for'],
+      greeting3: this.req.headers['x-forwarded-for'],
+      greeting4:
+        this.req.headers['x-forwarded-for'] ??
+        this.req.headers['cf-connecting-ip'],
       date: new Date(),
       url: this.req.url,
       headers: Object.assign({}, this.req.headers),
