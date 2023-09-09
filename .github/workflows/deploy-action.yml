@@ -16,11 +16,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSHKEY }}
           port: ${{ secrets.PORT }}
-        env:
-          PORT: ${{ secrets.PORT }}
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+        env:
+          PORT: ${{ secrets.PORT }}
       - run: git pull origin main
       - run: npm run docker:build
       - run: npm run docker:update
