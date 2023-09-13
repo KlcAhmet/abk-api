@@ -21,7 +21,7 @@ jobs:
           node-version: '18'
         env:
           PORT: ${{ secrets.PORT }}
-      - run: git pull origin main
+      - run: git pull origin develop
       - run: npm run docker:build-dev
       - run: npm run docker:update-dev
       - run: npm run docker:run-dev
