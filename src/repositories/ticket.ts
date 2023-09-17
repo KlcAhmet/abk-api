@@ -5,7 +5,6 @@ export async function createTicket(ticket: ITicket): Promise<object> {
     const newTicket = new TicketModel(ticket);
     return await newTicket.save();
   } catch (error) {
-    console.log('error', error);
-    return error;
+    throw new Error(error);
   }
 }
