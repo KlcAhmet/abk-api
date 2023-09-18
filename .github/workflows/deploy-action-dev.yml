@@ -24,7 +24,8 @@ jobs:
       - run: git pull origin develop
       - run: |
           touch .env
-          echo PP=${{ secrets.PP }} >> .env
+          echo PP=${{ secrets.API_PORT_3000 }} >> .env
+          echo PP=${{ secrets.MONGO_DB_URL }} >> .env
       - run: npm run docker:build-dev
       - run: npm run docker:update-dev
       - run: npm run docker:run-dev
