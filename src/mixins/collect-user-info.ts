@@ -1,17 +1,19 @@
 import {inject} from '@loopback/core';
 import {Request, RestBindings} from '@loopback/rest';
+import {IUserInfo} from '../models';
 
 export class CollectUsersInfo {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
-  getUserRemoteInfo() {
-    const ip =
-      this.req?.socket?.remoteAddress ??
-      this.req.headers['x-forwarded-for'] ??
-      this.req.headers['cf-connecting-ip'];
-
+  getUserRemoteInfo(): IUserInfo {
     return {
-      ip: ip,
+      socket: this.req?.socket?.remoteAddress,
+      cfConnectingIp: this.req.headers['cf-connecting-ip']
+        ? this.req.headers['cf-connecting-ip'].toString()
+        : undefined,
+      xForwardedFor: this.req.headers['x-forwarded-for']
+        ? this.req.headers['x-forwarded-for'].toString()
+        : undefined,
     };
   }
 

@@ -1,6 +1,6 @@
 import { inject } from '@loopback/core';
 import { post, Request, requestBody, response, ResponseObject, RestBindings } from '@loopback/rest';
-import { ITicket } from '../models';
+import { ITicket, IUserInfo } from '../models';
 import { CollectUsersInfo } from '../mixins';
 import { createTicket } from '../repositories';
 
@@ -41,7 +41,9 @@ export class TicketController {
   @response(200, TICKET_RESPONSE)
   async createTicket(@requestBody() ticket: ITicket): Promise<object> {
     try {
-      const userRemoteInfo = new CollectUsersInfo(this.req).getUserRemoteInfo();
+      const userRemoteInfo: IUserInfo = new CollectUsersInfo(
+        this.req,
+      ).getUserRemoteInfo();
       await createTicket(<ITicket>{
         ...ticket,
         userRemoteInfo: userRemoteInfo,

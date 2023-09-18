@@ -1,3 +1,5 @@
 export type IUserInfo = {
-  ip: string;
+  socket: string | undefined;
+  xForwardedFor: string | undefined;
+  cfConnectingIp: string | undefined;
 };

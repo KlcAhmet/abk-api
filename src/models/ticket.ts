@@ -10,9 +10,14 @@ export type ITicket = {
 
 const userInfoSchema = new Schema<IUserInfo>(
   {
-    ip: {
-      type: String,
-      required: true,
+    socket: {
+      type: String || undefined,
+    },
+    xForwardedFor: {
+      type: String || undefined,
+    },
+    cfConnectingIp: {
+      type: String || undefined,
     },
   },
   {timestamps: true, strict: true, strictQuery: true},
