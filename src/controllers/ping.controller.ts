@@ -43,10 +43,13 @@ export class PingController {
       this.req.socket.remoteAddress ??
       this.req.headers['x-forwarded-for'] ??
       this.req.headers['cf-connecting-ip'];
-    // Reply with a greeting, the current time, the url, and request headers
+
+    const pp = process.env.PP;
+
     return {
       greeting1: 'Hello from LoopBack test6',
       ip: ip,
+      pp: pp,
       greeting5: 'develop active',
       date: new Date(),
       url: this.req.url,
