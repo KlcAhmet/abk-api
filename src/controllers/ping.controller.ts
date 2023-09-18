@@ -49,7 +49,7 @@ export class PingController {
     return {
       greeting1: 'Hello from LoopBack test6',
       ip: ip,
-      pp: pp,
+      pp: pp ?? 'pp is not defined',
       greeting5: 'develop active',
       date: new Date(),
       url: this.req.url,
