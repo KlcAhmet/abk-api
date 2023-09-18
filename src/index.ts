@@ -18,7 +18,6 @@ export async function main(options: ApplicationConfig = {}) {
 
 if (require.main === module) {
   // Run the application
-  console.log();
   const config = {
     rest: {
       port: +(process.env.PORT ?? 3000),
