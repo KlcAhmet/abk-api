@@ -27,6 +27,10 @@ jobs:
           touch .env
           echo PORT="$PORT" >> .env
           echo MONGO_DB_URL="$MONGO_DB_URL" >> .env
+          echo "cat .env"
+          cat .env
+          echo "ls -a ."
+          ls -a
       - run: npm run docker:build-dev
       - run: npm run docker:update-dev
       - run: npm run docker:run-dev
