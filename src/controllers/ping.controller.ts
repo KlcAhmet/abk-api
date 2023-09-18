@@ -46,6 +46,7 @@ export class PingController {
     return {
       greeting:
         'Hello welcome to my api. Please dont use it for bad things. Thanks. Have a nice day. :)',
+      tt: 'tt',
       ip: ip,
       date: new Date(),
       url: this.req.url,
