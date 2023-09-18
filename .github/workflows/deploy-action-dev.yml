@@ -22,6 +22,7 @@ jobs:
         env:
           PORT: ${{ secrets.API_PORT_3000 }}
           MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }}
+          TEST: ${{ secrets.USERNAME }}
       - run: git pull origin develop
       - run: npm run docker:build-dev
       - run: npm run docker:update-dev
