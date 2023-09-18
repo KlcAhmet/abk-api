@@ -26,6 +26,8 @@ export class DbDataSource
   }
 
   start() {
+    console.log('process.env', process.env);
+    console.log('process.env.MONGO_DB_URL', process.env.MONGO_DB_URL);
     mongoose.connect(this.defaultConfig.url, this.defaultConfig.options).then(
       () => {
         console.log('Database connected');
