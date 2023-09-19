@@ -1,6 +1,6 @@
 import { inject } from '@loopback/core';
 import { post, Request, requestBody, response, ResponseObject, RestBindings } from '@loopback/rest';
-import { ITicket, IUserInfo } from '../models';
+import { ITicket, IUserInfo, TicketModel } from '../models';
 import { CollectUsersInfo, CustomError } from '../mixins';
 import { createTicket, getTicket } from '../repositories';
 
@@ -69,21 +69,18 @@ export class TicketController {
           : {'userRemoteInfo.socket': userRemoteInfo.socket};
         tickets = await getTicket(filter);
       }
+      const newTicket = new TicketModel({
+        ...ticket,
+        userRemoteInfo: userRemoteInfo,
+      });
+      const ticketValidation = newTicket.validateSync();
 
       if (
-        // validate tickets length for ddos attack protection (3 tickets per 1 minute)
+        // validate ticket request length for flood attack protection (2 tickets allowed per ip)
         sameIpCount < 3 &&
         tickets.length < 2 &&
         // validate ticket
-        ticket.message &&
-        ticket.message.length > 0 &&
-        ticket.message.length <= 1000 &&
-        ticket.name &&
-        ticket.name.length > 0 &&
-        ticket.name.length < 100 &&
-        ticket.mail &&
-        ticket.mail.length > 0 &&
-        ticket.mail.length < 100
+        !ticketValidation
       ) {
         await createTicket(<ITicket>{
           ...ticket,
@@ -91,7 +88,8 @@ export class TicketController {
         });
       } else {
         statusCode = tickets.length >= 2 || sameIpCount >= 3 ? 429 : 422;
-        new CustomError('createTicket-controller', undefined, statusCode);
+        const message: string | undefined = ticketValidation?.message;
+        new CustomError('createTicket-controller', message, statusCode);
       }
 
       return {
