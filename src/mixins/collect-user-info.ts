@@ -14,6 +14,22 @@ export class CollectUsersInfo {
       xForwardedFor: this.req.headers['x-forwarded-for']
         ? this.req.headers['x-forwarded-for'].toString()
         : undefined,
+      cfRay: this.req.headers['cf-ray']
+        ? this.req.headers['cf-ray'].toString()
+        : undefined,
+      secChUa: this.req.headers['sec-ch-ua']
+        ? this.req.headers['sec-ch-ua'].toString()
+        : undefined,
+      secChUaMobile: this.req.headers['sec-ch-ua-mobile']
+        ? this.req.headers['sec-ch-ua-mobile'].toString()
+        : undefined,
+      secChUaPlatform: this.req.headers['sec-ch-ua-platform']
+        ? this.req.headers['sec-ch-ua-platform'].toString()
+        : undefined,
+      userAgent: this.req.headers['user-agent'],
+      cfIpCountry: this.req.headers['cf-ipcountry']
+        ? this.req.headers['cf-ipcountry'].toString()
+        : undefined,
     };
   }
 

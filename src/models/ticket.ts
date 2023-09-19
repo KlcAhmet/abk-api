@@ -19,6 +19,24 @@ const userInfoSchema = new Schema<IUserInfo>(
     cfConnectingIp: {
       type: String || undefined,
     },
+    cfRay: {
+      type: String || undefined,
+    },
+    secChUa: {
+      type: String || undefined,
+    },
+    secChUaMobile: {
+      type: String || undefined,
+    },
+    secChUaPlatform: {
+      type: String || undefined,
+    },
+    userAgent: {
+      type: String || undefined,
+    },
+    cfIpCountry: {
+      type: String || undefined,
+    },
   },
   {timestamps: true, strict: true, strictQuery: true},
 );
