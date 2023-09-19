@@ -54,5 +54,5 @@ export const ticketSchema = new Schema<ITicket>(
 export const TicketModel = model<ITicket>(
   'abk-frontend',
   ticketSchema,
-  'tickets-dev',
+  process.env.BRANCH === 'main' ? 'ticket' : 'ticket-dev',
 );

@@ -19,16 +19,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-        env:
-          PORT: ${{ secrets.PORT }}
       - run: git pull origin main
       - run: |
           touch .env
           echo PORT="$PORT" >> .env
           echo MONGO_DB_URL="$MONGO_DB_URL" >> .env
+          echo BRANCH="$BRANCH" >> .env
         env:
           PORT: ${{ secrets.API_PORT_3000 }}
           MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }}
+          BRANCH: "main"
       - run: npm run docker:build-prod
       - run: npm run docker:update-prod
       - run: npm run docker:run-prod
