@@ -38,16 +38,16 @@ export class PingController {
   @get('/ping')
   @response(200, PING_RESPONSE)
   ping(): object {
-    console.log('ping', this.req.socket.remoteAddress); // bu headers geleck
     const ip =
       this.req.socket.remoteAddress ??
       this.req.headers['x-forwarded-for'] ??
       this.req.headers['cf-connecting-ip'];
-    // Reply with a greeting, the current time, the url, and request headers
+
     return {
-      greeting1: 'Hello from LoopBack test6',
+      greeting:
+        'Hello welcome to my api. Please dont use it for bad things. Thanks. Have a nice day. :)',
+      tt: 'tt',
       ip: ip,
-      greeting5: 'develop active',
       date: new Date(),
       url: this.req.url,
       headers: Object.assign({}, this.req.headers),
