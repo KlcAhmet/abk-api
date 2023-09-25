@@ -35,8 +35,6 @@ const TICKET_RESPONSE: ResponseObject = {
  * A simple controller to bounce back http requests
  */
 export class TicketController {
-  static createTicketIpCounter: string[] = [];
-
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
   @post('/ticket')
@@ -50,25 +48,13 @@ export class TicketController {
         this.req,
       ).getUserRemoteInfo();
 
-      TicketController.createTicketIpCounter.push(
-        <string>userRemoteInfo.xForwardedFor || <string>userRemoteInfo.socket,
-      );
-      const sameIpCount = TicketController.createTicketIpCounter.filter(ip => {
-        return (
-          ip === userRemoteInfo.xForwardedFor || ip === userRemoteInfo.socket
-        );
-      }).length;
-      if (sameIpCount >= 100)
-        TicketController.createTicketIpCounter =
-          TicketController.createTicketIpCounter.slice(21);
-      if (sameIpCount < 3) {
-        const filter = userRemoteInfo.xForwardedFor
-          ? {
-              'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
-            }
-          : {'userRemoteInfo.socket': userRemoteInfo.socket};
-        tickets = await getTicket(filter);
-      }
+      const filter = userRemoteInfo.xForwardedFor
+        ? {
+            'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
+          }
+        : {'userRemoteInfo.socket': userRemoteInfo.socket};
+      tickets = await getTicket(filter);
+      
       const newTicket = new TicketModel({
         ...ticket,
         userRemoteInfo: userRemoteInfo,
@@ -77,7 +63,6 @@ export class TicketController {
 
       if (
         // validate ticket request length for flood attack protection (2 tickets allowed per ip)
-        sameIpCount < 3 &&
         tickets.length < 2 &&
         // validate ticket
         !ticketValidation
@@ -87,7 +72,7 @@ export class TicketController {
           userRemoteInfo: userRemoteInfo,
         });
       } else {
-        statusCode = tickets.length >= 2 || sameIpCount >= 3 ? 429 : 422;
+        statusCode = tickets.length >= 2 ? 429 : 422;
         const message: string | undefined = ticketValidation?.message;
         new CustomError('createTicket-controller', message, statusCode);
       }
