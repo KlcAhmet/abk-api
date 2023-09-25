@@ -34,7 +34,7 @@ if (require.main === module) {
       },
 
       // Enable HTTPS
-      protocol: 'https',
+      protocol: process.env.PROTOCOL,
       key: fs.readFileSync('./cert/key.pem'),
       cert: fs.readFileSync('./cert/cert.pem'),
     },
