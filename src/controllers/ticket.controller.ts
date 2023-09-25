@@ -83,6 +83,7 @@ export class TicketController {
         date: new Date(),
         url: this.req.url,
         headers: Object.assign({}, this.req.headers),
+        tt: 2033,
       };
     } catch (error) {
       new CustomError('createTicket-controller', error?.message, statusCode);
