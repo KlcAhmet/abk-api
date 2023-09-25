@@ -30,7 +30,7 @@ jobs:
           PORT: ${{ secrets.API_PORT_3000 }}
           MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }}
           BRANCH: "develop"
-          PROTOCOL: "http"
+          PROTOCOL: "https"
       - run: npm run docker:build-dev
       - run: npm run docker:update-dev
       - run: npm run docker:run-dev
