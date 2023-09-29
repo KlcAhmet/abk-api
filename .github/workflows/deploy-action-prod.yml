@@ -25,10 +25,12 @@ jobs:
           echo PORT="$PORT" >> .env
           echo MONGO_DB_URL="$MONGO_DB_URL" >> .env
           echo BRANCH="$BRANCH" >> .env
+          echo PROTOCOL="$PROTOCOL" >> .env
         env:
           PORT: ${{ secrets.API_PORT_3000 }}
           MONGO_DB_URL: ${{ secrets.MONGO_DB_URL }}
           BRANCH: "main"
+          PROTOCOL: "https"
       - run: npm run docker:build-prod
       - run: npm run docker:update-prod
       - run: npm run docker:run-prod

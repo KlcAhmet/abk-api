@@ -42,11 +42,12 @@ export class PingController {
       this.req.socket.remoteAddress ??
       this.req.headers['x-forwarded-for'] ??
       this.req.headers['cf-connecting-ip'];
+    const branch = process.env.BRANCH;
 
     return {
       greeting:
         'Hello welcome to my api. Please dont use it for bad things. Thanks. Have a nice day. :)',
-      tt: 'tt',
+      branch: branch,
       ip: ip,
       date: new Date(),
       url: this.req.url,

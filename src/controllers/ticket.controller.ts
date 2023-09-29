@@ -1,8 +1,8 @@
 import { inject } from '@loopback/core';
 import { post, Request, requestBody, response, ResponseObject, RestBindings } from '@loopback/rest';
-import { ITicket, IUserInfo } from '../models';
+import { ITicket, IUserInfo, TicketModel } from '../models';
 import { CollectUsersInfo, CustomError } from '../mixins';
-import { createTicket } from '../repositories';
+import { createTicket, getTicket } from '../repositories';
 
 /**
  * OpenAPI response for ticket()
@@ -40,47 +40,55 @@ export class TicketController {
   @post('/ticket')
   @response(200, TICKET_RESPONSE)
   async createTicket(@requestBody() ticket: ITicket): Promise<object> {
-    let statusCode: 200 | 400 | 422 = 200;
-    let errorMessage: string | undefined = undefined;
+    let statusCode: 200 | 400 | 422 | 429 = 200;
+    let tickets: Object[] = [];
 
     try {
       const userRemoteInfo: IUserInfo = new CollectUsersInfo(
         this.req,
       ).getUserRemoteInfo();
 
+      const filter = userRemoteInfo.xForwardedFor
+        ? {
+            'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
+          }
+        : {'userRemoteInfo.socket': userRemoteInfo.socket};
+      tickets = await getTicket(filter);
+
+      const newTicket = new TicketModel({
+        ...ticket,
+        userRemoteInfo: userRemoteInfo,
+      });
+      const ticketValidation = newTicket.validateSync();
+
       if (
-        ticket.message &&
-        ticket.message.length > 0 &&
-        ticket.message.length < 1000 &&
-        ticket.name &&
-        ticket.name.length > 0 &&
-        ticket.name.length < 100 &&
-        ticket.mail &&
-        ticket.mail.length > 0 &&
-        ticket.mail.length < 100
+        // validate ticket request length for flood attack protection (2 tickets allowed per ip)
+        tickets.length < 2 &&
+        // validate ticket
+        !ticketValidation
       ) {
         await createTicket(<ITicket>{
           ...ticket,
           userRemoteInfo: userRemoteInfo,
         });
       } else {
-        errorMessage = 'Invalid ticket';
-        statusCode = 422;
-        new CustomError('createTicket-controller', errorMessage, statusCode);
+        statusCode = tickets.length >= 2 ? 429 : 422;
+        const message: string | undefined = ticketValidation?.message;
+        new CustomError('createTicket-controller', message, statusCode);
       }
 
       return {
         info: ticket,
         statusCode: statusCode,
-        errorMessage: errorMessage,
         date: new Date(),
         url: this.req.url,
         headers: Object.assign({}, this.req.headers),
+        tt: 2033,
       };
     } catch (error) {
       new CustomError('createTicket-controller', error?.message, statusCode);
       return {
-        statusCode: 422,
+        statusCode: 500,
         date: new Date(),
         url: this.req.url,
         headers: Object.assign({}, this.req.headers),
