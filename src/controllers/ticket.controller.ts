@@ -40,7 +40,7 @@ export class TicketController {
   @post('/ticket')
   @response(200, TICKET_RESPONSE)
   async createTicket(@requestBody() ticket: ITicket): Promise<object> {
-    let statusCode: 200 | 400 | 422 | 429 = 200;
+    let statusCode: 200 | 400 | 422 | 429 | 500 = 200;
     let tickets: Object[] = [];
     const BRANCH: boolean = process.env.BRANCH === 'develop';
 
@@ -81,17 +81,12 @@ export class TicketController {
       return {
         info: ticket,
         statusCode: statusCode,
-        date: new Date(),
-        url: this.req.url,
         headers: Object.assign({}, this.req.headers),
-        tt: 2033,
       };
     } catch (error) {
       new CustomError('createTicket-controller', error?.message, statusCode);
       return {
         statusCode: 500,
-        date: new Date(),
-        url: this.req.url,
         headers: Object.assign({}, this.req.headers),
       };
     }
