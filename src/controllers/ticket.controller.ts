@@ -2,7 +2,7 @@ import { inject } from '@loopback/core';
 import { post, Request, requestBody, response, ResponseObject, RestBindings } from '@loopback/rest';
 import { ITicket, IUserInfo, TicketModel } from '../models';
 import { CollectUsersInfo, CustomError } from '../mixins';
-import { createTicket, getTicket } from '../repositories';
+import { createTicket, getTicketsByIP } from '../repositories';
 
 /**
  * OpenAPI response for ticket()
@@ -42,6 +42,7 @@ export class TicketController {
   async createTicket(@requestBody() ticket: ITicket): Promise<object> {
     let statusCode: 200 | 400 | 422 | 429 = 200;
     let tickets: Object[] = [];
+    const BRANCH: boolean = process.env.BRANCH === 'develop';
 
     try {
       const userRemoteInfo: IUserInfo = new CollectUsersInfo(
@@ -53,7 +54,7 @@ export class TicketController {
             'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
           }
         : {'userRemoteInfo.socket': userRemoteInfo.socket};
-      tickets = await getTicket(filter);
+      tickets = BRANCH ? [true] : await getTicketsByIP(filter);
 
       const newTicket = new TicketModel({
         ...ticket,
