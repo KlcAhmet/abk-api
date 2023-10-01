@@ -49,31 +49,31 @@ export class TicketController {
         this.req,
       ).getUserRemoteInfo();
 
-      const filter = userRemoteInfo.xForwardedFor
-        ? {
-            'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
-          }
-        : {'userRemoteInfo.socket': userRemoteInfo.socket};
-      tickets = BRANCH ? [true] : await getTicketsByIP(filter);
-
       const newTicket = new TicketModel({
         ...ticket,
         userRemoteInfo: userRemoteInfo,
       });
       const ticketValidation = newTicket.validateSync();
 
-      if (
-        // validate ticket request length for flood attack protection (2 tickets allowed per ip)
-        tickets.length < 2 &&
-        // validate ticket
-        !ticketValidation
-      ) {
+      if (ticketValidation) statusCode = 400;
+
+      if (!ticketValidation) {
+        const filter = userRemoteInfo.xForwardedFor
+          ? {
+              'userRemoteInfo.xForwardedFor': userRemoteInfo.xForwardedFor,
+            }
+          : {'userRemoteInfo.socket': userRemoteInfo.socket};
+        tickets = BRANCH ? [true] : await getTicketsByIP(filter);
+
+        if (tickets.length >= 2) statusCode = 429;
+      }
+
+      if (statusCode === 200) {
         await createTicket(<ITicket>{
           ...ticket,
           userRemoteInfo: userRemoteInfo,
         });
       } else {
-        statusCode = tickets.length >= 2 ? 429 : 422;
         const message: string | undefined = ticketValidation?.message;
         new CustomError('createTicket-controller', message, statusCode);
       }
