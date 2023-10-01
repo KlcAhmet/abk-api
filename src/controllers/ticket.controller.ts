@@ -79,7 +79,6 @@ export class TicketController {
       }
 
       return {
-        info: ticket,
         statusCode: statusCode,
         headers: Object.assign({}, this.req.headers),
       };
