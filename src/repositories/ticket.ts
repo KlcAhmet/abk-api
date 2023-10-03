@@ -11,7 +11,7 @@ export async function createTicket(ticket: ITicket): Promise<ITicket> {
   }
 }
 
-export async function getTicket(filter: {}): Promise<Object[]> {
+export async function getTicketsByIP(filter: {}): Promise<Object[]> {
   try {
     return await TicketModel.find(filter);
     // return  await TicketModel.find({ name: 'john', age: { $gte: 18 } }).exec();

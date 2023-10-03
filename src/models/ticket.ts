@@ -10,13 +10,10 @@ export type ITicket = {
 
 const userInfoSchema = new Schema<IUserInfo>(
   {
-    socket: {
-      type: String || undefined,
-    },
-    xForwardedFor: {
-      type: String || undefined,
-    },
     cfConnectingIp: {
+      type: String || undefined,
+    },
+    cfIpCountry: {
       type: String || undefined,
     },
     cfRay: {
@@ -31,10 +28,13 @@ const userInfoSchema = new Schema<IUserInfo>(
     secChUaPlatform: {
       type: String || undefined,
     },
+    socket: {
+      type: String || undefined,
+    },
     userAgent: {
       type: String || undefined,
     },
-    cfIpCountry: {
+    xForwardedFor: {
       type: String || undefined,
     },
   },
@@ -46,13 +46,11 @@ export const ticketSchema = new Schema<ITicket>(
     name: {
       type: String,
       required: true,
-      min: 1,
       max: 100,
     },
     mail: {
       type: String,
       required: true,
-      min: 5,
       max: 100,
       validate: {
         validator: (val: string) => {
@@ -64,7 +62,6 @@ export const ticketSchema = new Schema<ITicket>(
     message: {
       type: String,
       required: true,
-      min: 5,
       max: 1000,
     },
     userRemoteInfo: userInfoSchema,
