@@ -1,35 +1,8 @@
 import { inject } from '@loopback/core';
-import { post, Request, requestBody, response, ResponseObject, RestBindings } from '@loopback/rest';
+import { post, Request, requestBody, RestBindings } from '@loopback/rest';
 import { ITicket, IUserInfo, TicketModel } from '../models';
 import { CollectUsersInfo, CustomError } from '../mixins';
 import { createTicket, getTicketsByIP } from '../repositories';
-
-/**
- * OpenAPI response for ticket()
- */
-const TICKET_RESPONSE: ResponseObject = {
-  description: 'Ticker Response',
-  content: {
-    'application/json': {
-      schema: {
-        type: 'object',
-        title: 'TickerResponse',
-        properties: {
-          greeting: {type: 'string'},
-          date: {type: 'string'},
-          url: {type: 'string'},
-          headers: {
-            type: 'object',
-            properties: {
-              'Content-Type': {type: 'string'},
-            },
-            additionalProperties: true,
-          },
-        },
-      },
-    },
-  },
-};
 
 /**
  * A simple controller to bounce back http requests
@@ -38,7 +11,6 @@ export class TicketController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
   @post('/ticket')
-  @response(200, TICKET_RESPONSE)
   async createTicket(@requestBody() ticket: ITicket): Promise<object> {
     let statusCode: 200 | 400 | 422 | 429 | 500 = 200;
     let tickets: Object[] = [];
